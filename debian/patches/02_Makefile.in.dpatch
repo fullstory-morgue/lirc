@@ -1,0 +1,49 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_Makefile.in.dpatch by  <Hector Garcia <hector@debian.org>>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad 0.8.2~/Makefile.in 0.8.2/Makefile.in
+--- 0.8.2~/Makefile.in	2007-06-09 21:35:57.000000000 +0200
++++ 0.8.2/Makefile.in	2007-10-16 15:50:17.144109084 +0200
+@@ -38,11 +38,6 @@
+ pkgincludedir = $(includedir)/@PACKAGE@
+ top_builddir = .
+ 
+-ACLOCAL = @ACLOCAL@
+-AUTOCONF = @AUTOCONF@
+-AUTOMAKE = @AUTOMAKE@
+-AUTOHEADER = @AUTOHEADER@
+-
+ am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
+ INSTALL = @INSTALL@
+ INSTALL_PROGRAM = @INSTALL_PROGRAM@
+@@ -157,18 +152,14 @@
+ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
+  configure.lineno
+ $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
+-	cd $(top_srcdir) && \
+-	  $(AUTOMAKE) --gnu  Makefile
+ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+ 	cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__depfiles_maybe)
+ 
+ $(top_builddir)/config.status: $(srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
+ 	$(SHELL) ./config.status --recheck
+ $(srcdir)/configure:  $(srcdir)/configure.in $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
+-	cd $(srcdir) && $(AUTOCONF)
+ 
+ $(ACLOCAL_M4):  configure.in acinclude.m4
+-	cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
+ 
+ config.h: stamp-h1
+ 	@if test ! -f $@; then \
+@@ -181,7 +172,6 @@
+ 	cd $(top_builddir) && $(SHELL) ./config.status config.h
+ 
+ $(srcdir)/config.h.in:  $(top_srcdir)/configure.in $(ACLOCAL_M4) $(top_srcdir)/acconfig.h
+-	cd $(top_srcdir) && $(AUTOHEADER)
+ 	touch $(srcdir)/config.h.in
+ 
+ distclean-hdr:

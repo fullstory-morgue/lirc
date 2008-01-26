@@ -1,0 +1,111 @@
+Source: lirc
+Section: utils
+Priority: extra
+Maintainer: lirc Maintainer Team <pkg-lirc-maint@lists.alioth.debian.org>
+Build-Depends: debhelper (>= 5),
+               libusb-dev [!hurd-i386],
+               libasound2-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
+               libice-dev,
+               libsm-dev,
+               libx11-dev,
+               libsvga1-dev [i386 amd64],
+               libirman-dev,
+               autotools-dev,
+               devscripts,
+               dpatch,
+               libxt-dev,
+               po-debconf
+Standards-Version: 3.7.2
+Uploaders: Hector Garcia <hector@debian.org>,
+           Julien Danjou <acid@debian.org>,
+           Aurelien Jarno <aurel32@debian.org>,
+           Amaya Rodrigo Sastre <amaya@debian.org>,
+           Loic Minier <lool@dooz.org>
+
+Package: lirc
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Pre-Depends: dialog
+Suggests: lirc-modules-source,
+          lirc-x,
+          lirc-svga
+Description: infra-red remote control support
+ LIRC stands for 'Linux Infra-red Remote Control'.
+ .
+ This package provides the daemons and some utilities to support infra-red
+ remote controls under Linux.
+
+Package: lirc-x
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         lirc (= ${binary:Version})
+Replaces: lirc (<< 0.6.4-8)
+Recommends: xfonts-75dpi
+Description: infra-red remote control support - X utilities
+ LIRC stands for 'Linux Infra-red Remote Control'.
+ .
+ This package provides X utilities for LIRC:
+  irxevent: allows controlling X applications with a remote control;
+  xmode2  : shows the IR waveform of the remote controller without an
+            oscilloscope. Unneeded for TV cards or the Irman.
+
+Package: lirc-svga
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         lirc (= ${binary:Version})
+Replaces: lirc (<< 0.6.4-8)
+Description: infra-red remote control support - SVGAlib utilities
+ LIRC stands for 'Linux Infra-red Remote Control'.
+ .
+ This package provides SVGAlib utilities for LIRC:
+  smode2: shows the IR waveform of the remote controller without an
+          oscilloscope. Unneeded for TV cards or the Irman.
+
+Package: lirc-modules-source
+Architecture: all
+Depends: ${misc:Depends},
+         debianutils (>= 1.7),
+         debhelper (>= 4),
+         ucf
+Recommends: make,
+            dpkg-dev (>= 1.13),
+            gcc | c-compiler,
+            kernel-package
+Suggests: kernel-source
+Conflicts: lirc (<<0.6.3-1)
+Description: infra-red remote control support - kernel modules
+ LIRC stands for 'Linux Infra-red Remote Control'.
+ .
+ This package provides the source for the kernel modules to support
+ infra-red remote controls under Linux.
+ .
+ The kernel sources must be installed to compile these modules.
+
+Package: liblircclient-dev
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends},
+         liblircclient0 (= ${binary:Version}),
+         libc6-dev
+Description: infra-red remote control support - client library development files
+ LIRC stands for 'Linux Infra-red Remote Control'.
+ .
+ This package contains the static library and headers for
+ the LIRC client library.
+
+Package: liblircclient0
+Priority: optional
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Suggests: lirc
+Description: infra-red remote control support - client library
+ LIRC stands for 'Linux Infra-red Remote Control'.
+ .
+ This package provides a library with functions to support remote
+ controls via LIRC in programs such as xawtv.
+

@@ -1,0 +1,9 @@
+02_Makefile.in.dpatch
+03_extra_files.dpatch
+04_man_pages.dpatch
+05_non_linux.dpatch
+06_libtool_kfreebsd.dpatch
+11_cheklib_fix.dpatch
+12_enodev_on_read.dpatch
+13_hurd_define_iotbase_u32.dpatch
+16_kcompat-2.6.23.dpatch

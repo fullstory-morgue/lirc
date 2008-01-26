@@ -1,0 +1,101 @@
+# These templates have been reviewed by the debian-l10n-english
+# team
+#
+# If modifications/additions/rewording are needed, please ask
+# debian-l10n-english@lists.debian.org for advice.
+#
+# Even minor modifications require translation updates and such
+# changes should be coordinated with translators and reviewers.
+
+Template: lirc/install_devices
+Type: boolean
+Default: true
+_Description: Create LIRC device nodes if they are not there?
+ LIRC needs the /dev/lirc, /dev/lircd and /dev/lircm files in /dev.
+ .
+ 
+
+Template: lirc/reconfigure
+Type: boolean
+Default: false
+_Description: Do you want to reconfigure LIRC?
+ LIRC is already configured, reconfiguring it may overwrite the
+ existing configuration in /etc/lirc/hardware.conf.
+ .
+ However, comments, LIRC_ARGS and other unknown code will be preserved.
+
+Template: lirc/take_care_of_old_config
+Type: note
+_Description: Old configuration files found
+ Previous versions of this package didn't include any configuration
+ file and expected users to create their own /etc/lircd.conf and
+ /etc/lircmd.conf.
+ .
+ The new location for these files is /etc/lirc/.
+ .
+ File locations will be corrected but you should check that none of
+ LIRC configuration files are left directly under /etc/.
+
+Template: lirc/driver
+Type: string
+Description: Driver name for lircd:
+ for internal use only
+
+Template: lirc/modules
+Type: string
+Description: Needed kernel modules for LIRC to work:
+ for internal use only
+
+Template: lirc/device
+Type: string
+Description: Device node for lircd:
+ for internal use only
+
+Template: lirc/lircd_conf
+Type: string
+Description: Recommended configuration file for lircd:
+ for internal use only
+
+Template: lirc/lircmd_conf
+Type: string
+Description: Recommended configuration file for lircmd:
+ for internal use only
+
+Template: lirc/port
+Type: string
+Description: Hint for lirc-modules-source:
+ for internal use only
+
+Template: lirc/irq
+Type: string
+Description: Hint for lirc-modules-source:
+ for internal use only
+
+Template: lirc/timer
+Type: string
+Description: Hint for lirc-modules-source:
+ for internal use only
+
+Template: lirc/cflags
+Type: string
+Description: Hint for lirc-modules-source:
+ for internal use only
+
+Template: lirc/should-use-IntelliMouse
+Type: note
+_Description: IntelliMouse protocol preferred over IMPS/2
+ You are currently using lircmd with the IMPS/2 protocol. This is not
+ compatible with the method lircmd uses to simulate a mouse, so IntelliMouse
+ support has been added and is now the preferred protocol.
+ .
+ You should update /etc/lirc/lircmd.conf and the configuration of any program
+ which uses lircmd as a mouse to use the IntelliMouse protocol instead.
+ .
+ NOTE: gpm will refuse to use lircmd as a mouse with IMPS/2 protocol.
+
+Template: lirc/remove_var-log-lircd
+Type: boolean
+Default: true
+_Description: Delete /var/log/lircd?
+ LIRC now uses syslog as a logging mechanism, so /var/log/lircd is no longer
+ relevant.

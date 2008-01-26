@@ -1,0 +1,20 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 13_hurd_define_iotbase_u32.patch.dpatch by Loic Minier <lool@dooz.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad 0.8.2~/drivers/lirc.h 0.8.2/drivers/lirc.h
+--- 0.8.2~/drivers/lirc.h	2007-10-16 16:45:40.470183227 +0200
++++ 0.8.2/drivers/lirc.h	2007-10-16 16:45:40.772153325 +0200
+@@ -16,6 +16,9 @@
+ #include <sys/ioctl.h>
+ #endif
+ typedef u_int32_t __u32;
++#if defined(_IOT_SIMPLE) && !defined(_IOT__IOTBASE___u32)
++#define _IOT__IOTBASE___u32 _IOT_SIMPLE(__u32)
++#endif
+ #endif
+ 
+ #define PULSE_BIT  0x01000000

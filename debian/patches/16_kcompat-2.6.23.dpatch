@@ -1,0 +1,44 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 16_kcompat-2.6.23.dpatch by Stefan Lippers-Hollmann <s.l-h@gmx.de>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: kernel 2.6.23 compatibility fix adapted from upstream CVS (1.52).
+
+@DPATCH@
+diff -urNad lirc-0.8.1~sidux~/drivers/lirc_dev/lirc_dev.c lirc-0.8.1~sidux/drivers/lirc_dev/lirc_dev.c
+--- lirc-0.8.1~sidux~/drivers/lirc_dev/lirc_dev.c	2006-12-29 11:00:07.000000000 +0100
++++ lirc-0.8.1~sidux/drivers/lirc_dev/lirc_dev.c	2007-09-18 12:19:37.000000000 +0200
+@@ -880,8 +880,13 @@
+ 	return SUCCESS;
+ 
+ out_unregister:
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,23)
++	/* unregister_chrdev returns void now */
++	unregister_chrdev(IRCTL_DEV_MAJOR, IRCTL_DEV_NAME);
++#else
+ 	if(unregister_chrdev(IRCTL_DEV_MAJOR, IRCTL_DEV_NAME))
+ 		printk(KERN_ERR "lirc_dev: unregister_chrdev failed!\n");
++#endif
+ out:
+ 	return -1;
+ }
+@@ -905,6 +910,11 @@
+  */
+ void cleanup_module(void)
+ {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,23)
++	/* unregister_chrdev returns void now */
++	unregister_chrdev(IRCTL_DEV_MAJOR, IRCTL_DEV_NAME);
++	class_destroy(lirc_class);
++#else
+ 	int ret;
+ 
+ 	ret = unregister_chrdev(IRCTL_DEV_MAJOR, IRCTL_DEV_NAME);
+@@ -914,6 +924,7 @@
+ 		printk("lirc_dev: error in module_unregister_chrdev: %d\n", ret);
+ 	else
+ 		dprintk("lirc_dev: module successfully unloaded\n");
++#endif
+ }
+ 
+ MODULE_DESCRIPTION("LIRC base driver module");

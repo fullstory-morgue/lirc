@@ -1,0 +1,22 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 12_enodev_on_read.patch.dpatch by Loic Minier <lool@dooz.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Debian #430898; close device if read() returns ENODEV; fixes infinite
+## DP: loop
+
+@DPATCH@
+diff -urNad 0.8.2~/daemons/hw_devinput.c 0.8.2/daemons/hw_devinput.c
+--- 0.8.2~/daemons/hw_devinput.c	2007-03-10 22:52:12.000000000 +0100
++++ 0.8.2/daemons/hw_devinput.c	2007-10-16 16:45:08.533346002 +0200
+@@ -265,6 +265,10 @@
+ 	
+ 	rd = read(hw.fd, &event, sizeof event);
+ 	if (rd != sizeof event) {
++		if (errno == ENODEV) {
++			close(hw.fd);
++			logprintf(LOG_ERR, "no device '%s'", hw.device);
++		}
+ 		logprintf(LOG_ERR, "error reading '%s'", hw.device);
+ 		if(rd <= 0 && errno != EINTR) raise(SIGTERM);
+ 		return 0;

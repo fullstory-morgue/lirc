@@ -1,0 +1,28 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 11_cheklib_fix.dpatch by  <Hector Garcia <hector@debian.org>>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad 0.8.2~/configure 0.8.2/configure
+--- 0.8.2~/configure	2007-10-16 16:35:51.540603563 +0200
++++ 0.8.2/configure	2007-10-16 16:39:57.678161008 +0200
+@@ -22533,7 +22533,7 @@
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lICE $X_EXTRA_LIBS $LIBS"
++LIBS="$X_EXTRA_LIBS $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -22591,7 +22591,7 @@
+ echo "$as_me:$LINENO: result: $ac_cv_lib_ICE_IceConnectionNumber" >&5
+ echo "${ECHO_T}$ac_cv_lib_ICE_IceConnectionNumber" >&6
+ if test $ac_cv_lib_ICE_IceConnectionNumber = yes; then
+-  X_PRE_LIBS="$X_PRE_LIBS -lSM -lICE"
++  X_PRE_LIBS="$X_PRE_LIBS"
+ fi
+ 
+   LDFLAGS=$ac_save_LDFLAGS

@@ -1,0 +1,161 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpatch/dpatch.make
+
+ifneq ($(findstring debug,$(DEB_BUILD_OPTIONS)),)
+CFLAGS += -g
+endif
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+INSTALL_PROGRAM += -s
+endif
+
+DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+configure_flags := \
+		--prefix=/usr \
+		--mandir=\$${prefix}/share/man \
+		--infodir=\$${prefix}/share/info \
+		--libdir=\$${prefix}/lib \
+		--sysconfdir=/etc/lirc/ \
+		--with-driver=userspace \
+		--with-syslog=LOG_DAEMON \
+		--enable-sandboxed \
+		--build=$(DEB_BUILD_GNU_TYPE)
+
+ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
+	configure_flags += --host=$(DEB_HOST_GNU_TYPE)
+endif
+
+clean: unpatch
+	dh_testdir
+	dh_testroot
+	rm -f debian/po/messages.mo
+	rm -f configure-stamp build-stamp
+	debconf-updatepo
+	[ ! -f Makefile ] || $(MAKE) distclean
+	dh_clean
+
+configure: patch configure-stamp
+configure-stamp:
+	dh_testdir
+	-test -r config.sub && test -r /usr/share/misc/config.sub && \
+		cp -f /usr/share/misc/config.sub config.sub
+	-test -r config.guess && test -r /usr/share/misc/config.guess && \
+		cp -f /usr/share/misc/config.guess config.guess
+	./configure $(configure_flags)
+	touch $@
+
+build: configure build-stamp
+build-stamp:
+	dh_testdir
+	$(MAKE)
+	touch $@
+
+install: build-stamp
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	install --mode=755 contrib/irman2lirc debian/tmp/usr/bin/
+	# allow building evenif vgalib is not available
+	if [ -e tools/smode2 ]; then \
+		install --mode=755 tools/smode2 debian/tmp/usr/bin/ ; \
+	fi
+	mkdir -p debian/tmp/etc/lirc/
+	mkdir -p debian/tmp/usr/share/lirc/
+	install --mode=644 debian/conf.placeholder \
+		debian/tmp/etc/lirc/lircd.conf
+	install --mode=644 debian/conf.placeholder \
+		debian/tmp/etc/lirc/lircmd.conf
+	install --mode=644 debian/hardware.conf debian/tmp/etc/lirc/
+	install --mode=644 debian/lirc-modules-source.conf \
+		debian/tmp/usr/share/lirc/lirc-modules-source.conf.tpl
+	mkdir -p debian/tmp/usr/src/modules/lirc
+	cp -dpR drivers debian/tmp/usr/src/modules/lirc/
+	find debian/tmp/usr/src/modules/lirc -name "*.o" -o -name Makefile.in \
+		-o -name Makefile.am -o -name "*.ko"| xargs rm
+	for file in `find debian/tmp/usr/src/modules/lirc -name Makefile`; \
+		do sed -e'/configure\.in/,/CONFIG_HEADERS/D' \
+			-e'/^CC *=/d' -e '/^KERNEL_LOCATION *=/d' \
+				$$file >$$file.tmp && \
+			mv $$file.tmp $$file; \
+		done
+	sed -n \
+		-e'/define *DEV_LIRC\>/p' \
+		-e'/define *LIRC_MAJOR\>/p' \
+		config.h >debian/tmp/usr/src/modules/lirc/config.h
+	cp -dpR debian/modules-source/* debian/tmp/usr/src/modules/lirc/
+	chmod +x debian/tmp/usr/src/modules/lirc/debian/rules
+	cp debian/changelog debian/copyright \
+		debian/tmp/usr/src/modules/lirc/debian/
+	mkdir -p debian/liblircclient-dev/usr/share/aclocal
+	cp contrib/lirc.m4 debian/liblircclient-dev/usr/share/aclocal/
+	# install logcheck files
+	install -d debian/tmp/etc/logcheck/ignore.d.paranoid
+	install -o root -g root -m 644 debian/logcheck.ignore \
+			debian/tmp/etc/logcheck/ignore.d.paranoid/lirc
+	install -d debian/tmp/etc/logcheck/ignore.d.server
+	install -o root -g root -m 644 debian/logcheck.ignore \
+			debian/tmp/etc/logcheck/ignore.d.server/lirc
+	install -d debian/tmp/etc/logcheck/ignore.d.workstation
+	install -o root -g root -m 644 debian/logcheck.ignore \
+			debian/tmp/etc/logcheck/ignore.d.workstation/lirc
+	# install devfs files
+	install -d debian/tmp/etc/devfs/conf.d/
+	install -o root -g root -m 644 debian/devfs.conf \
+			debian/tmp/etc/devfs/conf.d/lirc
+	install -d debian/tmp/etc/devfs/devices.d/
+	install -o root -g root -m 644 debian/devfs.devices \
+			debian/tmp/etc/devfs/devices.d/lirc
+
+binary-indep: build install
+	dh_installdocs -i
+	dh_installchangelogs -i
+	dh_install -i --sourcedir=debian/tmp --list-missing
+	cd debian/lirc-modules-source/usr/src/ && \
+		tar czf lirc-modules.tar.gz modules && \
+		rm -rf modules
+	dh_installdebconf -plirc-modules-source
+	dh_compress -i
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs -s ChangeLog
+	dh_installdocs -s
+	cp -dpR doc/html doc/images doc/irxevent.keys \
+		debian/lirc/usr/share/doc/lirc/
+	mkdir debian/lirc/usr/share/lirc
+	cp -dpR remotes debian/lirc/usr/share/lirc/remotes
+	dh_installexamples -s
+	dh_install -s --sourcedir=debian/tmp --list-missing
+	dh_installmenu -s
+	dh_installdebconf -plirc
+	dh_installinit -s --update-rcd-params="defaults 19"
+	dh_installcron -s
+	dh_installinfo -s
+	dh_installmodules -s
+	dh_installman -s
+	@for i in lirc-x lirc-svga; do \
+	    rm -rf debian/$${i}/usr/share/doc/$${i} ;\
+	done
+	dh_link -s
+	dh_strip -s
+	dh_compress -s -X irxevent.keys
+	dh_fixperms -s
+	dh_makeshlibs -s
+	dh_installdeb -s
+	dh_shlibdeps -s
+	dh_gencontrol -s
+	dh_md5sums -s
+	dh_builddeb -s
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install autotools

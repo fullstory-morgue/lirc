@@ -1,0 +1,31 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 06_libtool_kfreebsd.dpatch by  <Aurelien Jarno <aurel32@debian.org>>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad 0.8.2~/aclocal.m4 0.8.2/aclocal.m4
+--- 0.8.2~/aclocal.m4	2007-06-09 21:35:53.000000000 +0200
++++ 0.8.2/aclocal.m4	2007-10-16 16:08:18.127848284 +0200
+@@ -2193,7 +2193,7 @@
+   shlibpath_var=LD_LIBRARY_PATH
+   shlibpath_overrides_runpath=no
+   hardcode_into_libs=yes
+-  dynamic_linker='GNU ld.so'
++  dynamic_linker='GNU/kFreeBSD ld.so'
+   ;;
+ 
+ freebsd*)
+diff -urNad 0.8.2~/configure 0.8.2/configure
+--- 0.8.2~/configure	2007-10-16 16:04:27.582008117 +0200
++++ 0.8.2/configure	2007-10-16 16:04:27.841981962 +0200
+@@ -7910,7 +7910,7 @@
+   shlibpath_var=LD_LIBRARY_PATH
+   shlibpath_overrides_runpath=no
+   hardcode_into_libs=yes
+-  dynamic_linker='GNU ld.so'
++  dynamic_linker='GNU/kFreeBSD ld.so'
+   ;;
+ 
+ freebsd*)
