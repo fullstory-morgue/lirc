@@ -39,9 +39,8 @@ build_args ()
     ## Try to find an lirc device.
     ## udev uses /dev/lirc0
     ## static dev uses /dev/lirc
-    ## devfs uses /dev/lirc/0
     if [ -z "$DEVICE" ]; then
-    	for dev in /dev/lirc0 /dev/lirc /dev/lirc/0; do
+    	for dev in /dev/lirc0 /dev/lirc; do
 	    	if [ -c $dev ]; then
 				DEVICE="$dev"
 				break

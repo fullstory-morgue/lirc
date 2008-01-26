@@ -7,11 +7,4 @@ fi
 
 #DEBHELPER#
 
-if [ "$1" = "purge" ]; then
-	[ -x /usr/sbin/update-devfsd ] && /usr/sbin/update-devfsd >&2
-#	rm -f /etc/lircd.conf.old /etc/lircd.conf.new
-fi
-
-#debhelper may use debconf stuff and update-devfsd restarts devfsd which
-#doesn't close stdin/out/err properly.
 db_stop || true

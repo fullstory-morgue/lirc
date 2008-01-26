@@ -1,4 +1,3 @@
-etc/devfs/*
 etc/lirc/{hardware.conf,lircd.conf,lircmd.conf}
 etc/logcheck/*
 etc/modutils/*

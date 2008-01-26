@@ -59,7 +59,7 @@ install: build-stamp
 	dh_installdirs
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 	install --mode=755 contrib/irman2lirc debian/tmp/usr/bin/
-	# allow building evenif vgalib is not available
+	# allow building even if vgalib is not available
 	if [ -e tools/smode2 ]; then \
 		install --mode=755 tools/smode2 debian/tmp/usr/bin/ ; \
 	fi
@@ -102,13 +102,6 @@ install: build-stamp
 	install -d debian/tmp/etc/logcheck/ignore.d.workstation
 	install -o root -g root -m 644 debian/logcheck.ignore \
 			debian/tmp/etc/logcheck/ignore.d.workstation/lirc
-	# install devfs files
-	install -d debian/tmp/etc/devfs/conf.d/
-	install -o root -g root -m 644 debian/devfs.conf \
-			debian/tmp/etc/devfs/conf.d/lirc
-	install -d debian/tmp/etc/devfs/devices.d/
-	install -o root -g root -m 644 debian/devfs.devices \
-			debian/tmp/etc/devfs/devices.d/lirc
 
 binary-indep: build install
 	dh_installdocs -i
