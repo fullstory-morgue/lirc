@@ -135,7 +135,7 @@ kdist_clean: debian/control
 	$(ROOT_CMD) $(MAKE) $(MFLAGS) -f debian/rules clean
 kdist_configure:
 #	Nothing to do when configured.
+kdist: kdist_image
 
-
-.PHONY: binary-modules kdist_image
+.PHONY: binary-modules kdist_image kdist
 
