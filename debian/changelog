@@ -5,12 +5,13 @@ lirc (0.8.2-1+c0.sidux.5) UNRELEASED; urgency=low
   * remove devfs support.
   * add LSB header to lirc initscript as suggested by Petter Reinholdtsen
     <pere@hungry.com> (Closes: #460212).
-  * apply patch from Václav Ovsík <vaclav.ovsik@i.cz> to fix Makefile 
+  * apply patch from Václav Ovsík <vaclav.ovsik@i.cz> to fix Makefile
     mangling for lirc-source, evaluating utsrelease.h instead of the no longer
     existing version.h and recommend linux-image-$KVERS instead of the
     obsolete kernel-image-$KVERS (Closes: #447172).
+  * add compatibility patch for kernels >= 2.6.24, based on upstream CVS.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 27 Jan 2008 01:02:28 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 27 Jan 2008 01:16:41 +0100
 
 lirc (0.8.2-1) experimental; urgency=low
 

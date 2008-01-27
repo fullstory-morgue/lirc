@@ -1,0 +1,133 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 16_kcompat-2.6.24.dpatch by Stefan Lippers-Hollmann <s.l-h@gmx.de>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: kernel 2.6.24 compatibility fix adapted from upstream CVS:
+## DP: - http://lirc.cvs.sourceforge.net/lirc/lirc/drivers/lirc_dev/lirc_dev.c?r1=1.53&r2=1.54
+## DP: - http://lirc.cvs.sourceforge.net/lirc/lirc/drivers/lirc_it87/lirc_it87.c?r1=1.23&r2=1.24
+## DP: - http://lirc.cvs.sourceforge.net/lirc/lirc/drivers/lirc_serial/lirc_serial.c?r1=5.86&r2=5.87
+## DP: - http://lirc.cvs.sourceforge.net/lirc/lirc/drivers/lirc_sir/lirc_sir.c?r1=1.47&r2=1.48
+
+@DPATCH@
+diff -urNad trunk~/drivers/lirc_dev/lirc_dev.c trunk/drivers/lirc_dev/lirc_dev.c
+--- trunk~/drivers/lirc_dev/lirc_dev.c	2008-01-27 00:37:48.000000000 +0100
++++ trunk/drivers/lirc_dev/lirc_dev.c	2008-01-27 01:12:45.000000000 +0100
+@@ -41,6 +41,7 @@
+ #include <linux/fs.h>
+ #include <linux/poll.h>
+ #include <linux/smp_lock.h>
++#include <linux/completion.h>
+ #include <asm/uaccess.h>
+ #include <asm/semaphore.h>
+ #include <asm/errno.h>
+@@ -81,8 +82,8 @@
+ 	struct lirc_buffer *buf;
+ 
+ 	int tpid;
+-	struct semaphore *t_notify;
+-	struct semaphore *t_notify2;
++	struct completion *t_notify;
++	struct completion *t_notify2;
+ 	int shutdown;
+ 	long jiffies_to_wait;
+ 
+@@ -190,7 +191,7 @@
+ 	daemonize("lirc_dev");
+ 	
+ 	if (ir->t_notify != NULL) {
+-		up(ir->t_notify);
++		complete(ir->t_notify);
+ 	}
+ 	
+ 	dprintk(LOGHEAD "poll thread started\n", ir->p.name, ir->p.minor);
+@@ -217,12 +218,12 @@
+ 	} while (!ir->shutdown);
+ 	
+ 	if (ir->t_notify2 != NULL) {
+-		down(ir->t_notify2);
++		wait_for_completion(ir->t_notify2);
+ 	}
+ 
+ 	ir->tpid = -1;
+ 	if (ir->t_notify != NULL) {
+-		up(ir->t_notify);
++		complete(ir->t_notify);
+ 	}
+ 	
+ 	dprintk(LOGHEAD "poll thread ended\n", ir->p.name, ir->p.minor);
+@@ -242,7 +243,7 @@
+ #ifdef LIRC_HAVE_DEVFS_24
+ 	char name[16];
+ #endif
+-	DECLARE_MUTEX_LOCKED(tn);
++	DECLARE_COMPLETION(tn);
+ 
+ 	if (!p) {
+ 		printk("lirc_dev: lirc_register_plugin: "
+@@ -393,7 +394,7 @@
+ 			err = -ECHILD;
+ 			goto out_sysfs;
+ 		}
+-		down(&tn);
++		wait_for_completion(&tn);
+ 		ir->t_notify = NULL;
+ 	}
+ 	ir->attached = 1;
+@@ -431,8 +432,8 @@
+ int lirc_unregister_plugin(int minor)
+ {
+ 	struct irctl *ir;
+-	DECLARE_MUTEX_LOCKED(tn);
+-	DECLARE_MUTEX_LOCKED(tn2);
++	DECLARE_COMPLETION(tn);
++	DECLARE_COMPLETION(tn2);
+ 
+ 	if (minor < 0 || minor >= MAX_IRCTL_DEVICES) {
+ 		printk("lirc_dev: lirc_unregister_plugin: "
+@@ -468,8 +469,8 @@
+ 		/* 2.2.x does not export wake_up_process() */
+ 		wake_up_interruptible(ir->p.get_queue(ir->p.data));
+ #endif
+-		up(&tn2);
+-		down(&tn);
++		complete(&tn2);
++		wait_for_completion(&tn);
+ 		ir->t_notify = NULL;
+ 		ir->t_notify2 = NULL;
+ 	}
+diff -urNad trunk~/drivers/lirc_it87/lirc_it87.c trunk/drivers/lirc_it87/lirc_it87.c
+--- trunk~/drivers/lirc_it87/lirc_it87.c	2008-01-27 00:37:48.000000000 +0100
++++ trunk/drivers/lirc_it87/lirc_it87.c	2008-01-27 01:13:28.000000000 +0100
+@@ -934,7 +934,7 @@
+ 	/* Leaving MB PnP Mode */
+ 	it87_write(IT87_CFGCTRL, 0x2);
+ 
+-	retval = request_irq(irq, it87_interrupt, 0 /*SA_INTERRUPT*/,
++	retval = request_irq(irq, it87_interrupt, 0 /*IRQF_DISABLED*/,
+ 			     LIRC_DRIVER_NAME, NULL);
+ 	if (retval < 0) {
+ 		printk(KERN_ERR LIRC_DRIVER_NAME
+diff -urNad trunk~/drivers/lirc_serial/lirc_serial.c trunk/drivers/lirc_serial/lirc_serial.c
+--- trunk~/drivers/lirc_serial/lirc_serial.c	2008-01-27 00:37:48.000000000 +0100
++++ trunk/drivers/lirc_serial/lirc_serial.c	2008-01-27 01:14:21.000000000 +0100
+@@ -998,7 +998,7 @@
+ 	do_gettimeofday(&lasttv);
+ 
+ 	result=request_irq(irq,irq_handler,
+-			   SA_INTERRUPT | (share_irq ? SA_SHIRQ:0),
++			   IRQF_DISABLED | (share_irq ? IRQF_SHARED:0),
+ 			   LIRC_DRIVER_NAME,(void *)&hardware);
+ 	
+ 	switch(result)
+diff -urNad trunk~/drivers/lirc_sir/lirc_sir.c trunk/drivers/lirc_sir/lirc_sir.c
+--- trunk~/drivers/lirc_sir/lirc_sir.c	2008-01-27 00:37:48.000000000 +0100
++++ trunk/drivers/lirc_sir/lirc_sir.c	2008-01-27 01:14:44.000000000 +0100
+@@ -1051,7 +1051,7 @@
+ 		return -EBUSY;
+ 	}
+ #endif
+-	retval = request_irq(irq, sir_interrupt, SA_INTERRUPT,
++	retval = request_irq(irq, sir_interrupt, IRQF_DISABLED,
+ 			     LIRC_DRIVER_NAME, NULL);
+ 	if (retval < 0) {
+ #               ifndef LIRC_ON_SA1100
