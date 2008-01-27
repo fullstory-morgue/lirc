@@ -77,9 +77,14 @@ install: build-stamp
 	find debian/tmp/usr/src/modules/lirc -name "*.o" -o -name Makefile.in \
 		-o -name Makefile.am -o -name "*.ko"| xargs rm
 	for file in `find debian/tmp/usr/src/modules/lirc -name Makefile`; \
-		do sed -e'/configure\.in/,/CONFIG_HEADERS/D' \
-			-e'/^CC *=/d' -e '/^KERNEL_LOCATION *=/d' \
-				$$file >$$file.tmp && \
+		do \
+		    awk '/^[^:]*Makefile[^:]*:/ \
+				{ beg=1; prune=1; } \
+			 ( /^[ \t]*$$/ || /^[^\t]/ ) && !beg \
+				{ prune=0; } \
+			 !prune && !/^(CC|KERNEL_LOCATION)[ \t]*=/ \
+				{ print; } \
+			 { beg = 0; }' $$file >$$file.tmp && \
 			mv $$file.tmp $$file; \
 		done
 	sed -n \
