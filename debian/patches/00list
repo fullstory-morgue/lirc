@@ -8,3 +8,4 @@
 13_hurd_define_iotbase_u32.dpatch
 16_kcompat-2.6.23.dpatch
 17_kcompat-2.6.24.dpatch
+18_pinsys-keycodes.dpatch
