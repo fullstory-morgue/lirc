@@ -19,8 +19,9 @@ Standards-Version: 3.7.2
 Uploaders: Hector Garcia <hector@debian.org>,
            Julien Danjou <acid@debian.org>,
            Aurelien Jarno <aurel32@debian.org>,
-           Amaya Rodrigo Sastre <amaya@debian.org>,
-           Loic Minier <lool@dooz.org>
+           Loic Minier <lool@dooz.org>,
+           Sven Mueller <sven@debian.org>,
+           Matthew Johnson <mjj29@debian.org>
 
 Package: lirc
 Architecture: any

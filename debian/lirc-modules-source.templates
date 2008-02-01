@@ -49,14 +49,6 @@ Type: note
 _Description: Binary modules package build instructions
  For instructions on how to build the binary modules package, please
  read the /usr/share/doc/lirc-modules-source/README.Debian file.
- .
- Quick walkthrough:
- .
-  cd /usr/src/
-  tar -xzf lirc-modules.tar.gz
-  cd modules/lirc
-  debian/rules binary-modules KSRC=/path/of/my/kernel/source/
-  dpkg -i ../../irc-modules-*.deb
 
 Template: lirc-modules-source/it87_type
 Type: select

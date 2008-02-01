@@ -75,13 +75,19 @@ START_LIRCD=true
 START_IREXEC=true
 
 if [ ! -f /etc/lirc/lircd.conf ] \
-	|| grep -q "^#UNCONFIGURED"  /etc/lirc/lircd.conf;then
+	|| grep -q "^#UNCONFIGURED"  /etc/lirc/lircd.conf \
+	|| [ ! -f /etc/lirc/hardware.conf ] \
+	|| grep -qE "^DRIVER=.UNCONFIGURED." /etc/lirc/hardware.conf; then
 	if [ "$1" = "start" ]; then
           echo "##################################################"
           echo "## LIRC IS NOT CONFIGURED                       ##"
           echo "##                                              ##"
           echo "## read /usr/share/doc/lirc/html/configure.html ##"
           echo "##################################################"
+	  echo "Additional hint: Either /etc/lirc/lircd.conf or "
+	  echo " /etc/lirc/hardware.conf doesn't exist or either"
+	  echo " of the two has the string UNCONFIGURED in it at"
+	  echo " some important place. Try: 'dpkg-reconfigure lirc'"
 	fi
 	START_LIRCD=false
 	START_LIRCMD=false

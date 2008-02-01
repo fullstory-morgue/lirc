@@ -2,10 +2,11 @@ LIRC kernel modules source for DEBIAN
 =====================================
 
 In the Debian packaging of LIRC, kernel module sources are installed in
-/usr/src/lirc-modules.tar.gz. In order to build them, you should:
+/usr/src/lirc-modules.tar.gz. In order to build them, you should use
+module-assistant and run:
 
-	cd /usr/src
-	tar -xzf lirc-modules.tar.gz
+m-a prepare # to prepare your system to build modules for the current kernel
+m-a install lirc # to build a .deb of the lirc modules and install it
 
-You will now have a directory called lirc under /usr/src/modules, please read
-/usr/src/modules/lirc/README for further instructions.
+Please read the module-assistant docs for more information.
+

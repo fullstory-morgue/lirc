@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lirc\n"
 "Report-Msgid-Bugs-To: pkg-lirc-maint@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-09-22 09:29+0200\n"
+"POT-Creation-Date: 2007-10-16 20:17+0200\n"
 "PO-Revision-Date: 2007-10-07 18:05+0200\n"
 "Last-Translator: Esko Arajärvi <edu@iki.fi>\n"
 "Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
@@ -109,12 +109,6 @@ msgid ""
 msgstr ""
 "Ohjeet binäärimodulipaketin kääntämiseen löytyvät tiedostosta /usr/share/doc/"
 "lirc-modules-source/README.Debian."
-
-#. Type: note
-#. Description
-#: ../lirc-modules-source.templates:5001
-msgid "Quick walkthrough:"
-msgstr "Pikaohje:"
 
 #. Type: select
 #. Choices
@@ -427,3 +421,6 @@ msgid ""
 msgstr ""
 "LIRC käyttää nykyään lokin pitämiseen syslog-järjestelmää, joten /var/log/"
 "lircd ei ole enää tarpeellinen."
+
+#~ msgid "Quick walkthrough:"
+#~ msgstr "Pikaohje:"

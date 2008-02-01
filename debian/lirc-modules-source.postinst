@@ -141,8 +141,10 @@ if [ "$1" = "configure" ]; then
   if [ -f /etc/lirc/$package.conf ]; then
 	/usr/bin/ucf --debconf-ok --three-way "$newfile" /etc/lirc/lirc-modules-source.conf
 	rm "$newfile"
+	chmod 644 /etc/lirc/lirc-modules-source.conf
   else
   	mv "$newfile" /etc/lirc/lirc-modules-source.conf
+	chmod 644 /etc/lirc/lirc-modules-source.conf
   fi
 fi
 

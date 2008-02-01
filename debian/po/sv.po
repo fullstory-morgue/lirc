@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lirc 0.7.1pre2-9\n"
 "Report-Msgid-Bugs-To: pkg-lirc-maint@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-09-22 09:29+0200\n"
+"POT-Creation-Date: 2007-10-16 20:17+0200\n"
 "PO-Revision-Date: 2007-01-24 16:37+0100\n"
 "Last-Translator: Andreas Henriksson <andreas@fatal.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -126,13 +126,6 @@ msgid ""
 msgstr ""
 "För instruktioner om hur man bygger det binära modulpaketet för Debian, "
 "läs: /usr/share/doc/lirc-modules-source/README.Debian"
-
-#. Type: note
-#. Description
-#: ../lirc-modules-source.templates:5001
-#, fuzzy
-msgid "Quick walkthrough:"
-msgstr "Snabb genomgång:"
 
 #. Type: select
 #. Choices
@@ -462,6 +455,10 @@ msgid ""
 msgstr ""
 "LIRC använder numera syslog som en loggmekanism. Detta betyder att /var/log/"
 "lircd inte längre är relevant."
+
+#, fuzzy
+#~ msgid "Quick walkthrough:"
+#~ msgstr "Snabb genomgång:"
 
 #~ msgid ""
 #~ "You have installed and configured LIRC. It is possible to guess what "

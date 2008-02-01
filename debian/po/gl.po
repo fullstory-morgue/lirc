@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lirc\n"
 "Report-Msgid-Bugs-To: pkg-lirc-maint@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-09-22 09:29+0200\n"
+"POT-Creation-Date: 2007-10-16 20:17+0200\n"
 "PO-Revision-Date: 2007-09-30 18:53+0100\n"
 "Last-Translator: Jacobo Tarrio <jtarrio@debian.org>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -110,12 +110,6 @@ msgid ""
 msgstr ""
 "Para recibir instrucións sobre a compilación do paquete de módulos binarios, "
 "consulte o ficheiro /usr/share/doc/lirc-modules-source/README.Debian"
-
-#. Type: note
-#. Description
-#: ../lirc-modules-source.templates:5001
-msgid "Quick walkthrough:"
-msgstr "Guía rápida:"
 
 #. Type: select
 #. Choices
@@ -427,3 +421,6 @@ msgid ""
 msgstr ""
 "Agora LIRC emprega syslog coma mecanismo de rexistro, así que /var/log/lircd "
 "xa non é pertinente."
+
+#~ msgid "Quick walkthrough:"
+#~ msgstr "Guía rápida:"

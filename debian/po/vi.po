@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lirc 0.8.0-13\n"
 "Report-Msgid-Bugs-To: pkg-lirc-maint@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-09-22 09:29+0200\n"
+"POT-Creation-Date: 2007-10-16 20:17+0200\n"
 "PO-Revision-Date: 2007-09-28 23:35+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -113,12 +113,6 @@ msgid ""
 msgstr ""
 "Để tìm hướng dẫn về cách xây dựng gói mô-đụn nhị phân, xem tập tin Đọc Đi « /"
 "usr/share/doc/lirc-modules-source/README.Debian »."
-
-#. Type: note
-#. Description
-#: ../lirc-modules-source.templates:5001
-msgid "Quick walkthrough:"
-msgstr "Tóm tắt:"
 
 #. Type: select
 #. Choices
@@ -434,6 +428,9 @@ msgid ""
 msgstr ""
 "LIRC giờ này dùng syslog (bản ghi hệ thống) để ghi lưu dữ liệu. Vì vậy « /"
 "var/log/lircd » không còn hữu ích lại."
+
+#~ msgid "Quick walkthrough:"
+#~ msgstr "Tóm tắt:"
 
 #~ msgid ""
 #~ "You have installed and configured LIRC. It is possible to guess what "

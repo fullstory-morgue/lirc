@@ -30,7 +30,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lirc 0.8.0\n"
 "Report-Msgid-Bugs-To: pkg-lirc-maint@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-09-22 09:29+0200\n"
+"POT-Creation-Date: 2007-10-16 20:17+0200\n"
 "PO-Revision-Date: 2006-10-18 02:42-0500\n"
 "Last-Translator: Rudy Godoy <rudy@kernel-panik.org>\n"
 "Language-Team: Debian Spanish l10n team <debian-l10n-spanish@lists.debian."
@@ -141,13 +141,6 @@ msgstr ""
 "Para encontrar instrucciones sobre cómo compilar manualmente el\n"
 "paquete debian de módulos véase: /usr/share/doc/lirc-modules-source/README."
 "Debian"
-
-#. Type: note
-#. Description
-#: ../lirc-modules-source.templates:5001
-#, fuzzy
-msgid "Quick walkthrough:"
-msgstr "A modo de resumen:"
 
 #. Type: select
 #. Choices
@@ -483,6 +476,10 @@ msgid ""
 msgstr ""
 "LIRC ahora usa syslog como mecanismo de registro. Esto significa que /var/"
 "log/lircdya no es pertinente."
+
+#, fuzzy
+#~ msgid "Quick walkthrough:"
+#~ msgstr "A modo de resumen:"
 
 #~ msgid ""
 #~ "You have installed and configured LIRC. It is possible to guess what "

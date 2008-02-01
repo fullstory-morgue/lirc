@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lirc 0.8.0-13\n"
 "Report-Msgid-Bugs-To: pkg-lirc-maint@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-09-22 09:29+0200\n"
+"POT-Creation-Date: 2007-10-16 20:17+0200\n"
 "PO-Revision-Date: 2007-10-06 23:19+0200\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -76,8 +76,8 @@ msgid ""
 "modules that should be built, along with their parameters."
 msgstr ""
 "Ihre vorhergehende Antwort kann als Basis zum Raten der Liste von "
-"Kernelmodulen, die erstellt werden sollen, zusammen mit der zugehörigen Liste "
-"an Parametern verwendet werden."
+"Kernelmodulen, die erstellt werden sollen, zusammen mit der zugehörigen "
+"Liste an Parametern verwendet werden."
 
 #. Type: boolean
 #. Description
@@ -116,12 +116,6 @@ msgid ""
 msgstr ""
 "Für Anweisungen, wie das Debian-Binärmodulpaket gebaut wird, lesen Sie die "
 "Datei /usr/share/doc/lirc-modules-source/README.Debian."
-
-#. Type: note
-#. Description
-#: ../lirc-modules-source.templates:5001
-msgid "Quick walkthrough:"
-msgstr "Schneller Durchlauf:"
 
 #. Type: select
 #. Choices
@@ -324,7 +318,8 @@ msgstr ""
 #. Description
 #: ../lirc.templates:2001
 msgid "LIRC needs the /dev/lirc, /dev/lircd and /dev/lircm files in /dev."
-msgstr "LIRC benötigt die Dateien /dev/lirc, /dev/lircd und /dev/lircm in /dev."
+msgstr ""
+"LIRC benötigt die Dateien /dev/lirc, /dev/lircd und /dev/lircm in /dev."
 
 #. Type: boolean
 #. Description
@@ -363,8 +358,8 @@ msgid ""
 "expected users to create their own /etc/lircd.conf and /etc/lircmd.conf."
 msgstr ""
 "Vorhergehende Versionen dieses Pakets beinhalteten keine "
-"Konfigurationsdateien und erwarteten vom Benutzer, eigene Konfigurationen in "
-"/etc/lircd.conf und /etc/lircmd.conf anzulegen."
+"Konfigurationsdateien und erwarteten vom Benutzer, eigene Konfigurationen "
+"in /etc/lircd.conf und /etc/lircmd.conf anzulegen."
 
 #. Type: note
 #. Description
@@ -411,8 +406,8 @@ msgid ""
 "which uses lircmd as a mouse to use the IntelliMouse protocol instead."
 msgstr ""
 "Sie sollten /etc/lirc/lircmd.conf und die Konfigurationen von allen "
-"Programmen, die Lircmd als Maus verwenden, aktualisieren, und stattdessen das "
-"IntelliMouse-Protokoll verwenden."
+"Programmen, die Lircmd als Maus verwenden, aktualisieren, und stattdessen "
+"das IntelliMouse-Protokoll verwenden."
 
 #. Type: note
 #. Description
@@ -437,6 +432,9 @@ msgid ""
 msgstr ""
 "LIRC benutzt nun syslog als Protokollmechanismus, daher ist /var/log/lircd "
 "nicht mehr relevant."
+
+#~ msgid "Quick walkthrough:"
+#~ msgstr "Schneller Durchlauf:"
 
 #~ msgid ""
 #~ "You have installed and configured LIRC. It is possible to guess what "

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lirc\n"
 "Report-Msgid-Bugs-To: pkg-lirc-maint@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-09-22 09:29+0200\n"
+"POT-Creation-Date: 2007-10-16 20:17+0200\n"
 "PO-Revision-Date: 2007-09-26 10:07+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -118,12 +118,6 @@ msgid ""
 msgstr ""
 "バイナリモジュールパッケージをどのように構築するかの手引きについては、/usr/"
 "share/doc/lirc-modules-source/README.Debian を読んでください。"
-
-#. Type: note
-#. Description
-#: ../lirc-modules-source.templates:5001
-msgid "Quick walkthrough:"
-msgstr "簡単にリハーサル:"
 
 #. Type: select
 #. Choices
@@ -430,3 +424,6 @@ msgid ""
 msgstr ""
 "LIRC は今ではログ機構として syslog を使います。/var/log/lircd はもはや無関係"
 "です。"
+
+#~ msgid "Quick walkthrough:"
+#~ msgstr "簡単にリハーサル:"
