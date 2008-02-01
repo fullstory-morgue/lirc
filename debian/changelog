@@ -12,7 +12,7 @@ lirc (0.8.2-1+c0.sidux.6) unstable; urgency=low
     - Add some additional checks to the init script (Closes: #394663)
     - Update lirc-modules-source README.Debian to refer to module-assistant
       (Closes: #429249)
-    - New upstream closes: #409394,#432801,434569,#350318,#399135,#400494,#368075
+    - New upstream closes: #409394,432801,434569,350318,399135,400494,368075
     - dpkg-reconfigure lirc-modules-source will now make
       /etc/lirc/lirc-modules-source.conf world-readable. This should not be a
       security risk, but allows building modules as a user via fakeroot. This
