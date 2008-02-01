@@ -1,3 +1,9 @@
+lirc (0.8.2-1+c0.sidux.6) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 01 Feb 2008 19:05:13 +0100
+
 lirc (0.8.2-1+c0.sidux.5) unstable; urgency=low
 
   * fix make-kpkg compatibility (Closes: #372815).
