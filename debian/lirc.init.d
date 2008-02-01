@@ -5,6 +5,9 @@
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
+# Short-Description: Starts LIRC daemon.
+# Description:       LIRC is used to control different
+#                    infrared receivers and transceivers.
 ### END INIT INFO
 
 load_modules ()
