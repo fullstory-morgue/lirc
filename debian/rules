@@ -1,6 +1,10 @@
 #!/usr/bin/make -f
 
+# dpatch support
 include /usr/share/dpatch/dpatch.make
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
 
 ifneq ($(findstring debug,$(DEB_BUILD_OPTIONS)),)
 CFLAGS += -g
@@ -57,12 +61,15 @@ install: build-stamp
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
+	
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 	install --mode=755 contrib/irman2lirc debian/tmp/usr/bin/
+	
 	# allow building even if vgalib is not available
 	if [ -e tools/smode2 ]; then \
 		install --mode=755 tools/smode2 debian/tmp/usr/bin/ ; \
 	fi
+	
 	mkdir -p debian/tmp/etc/lirc/
 	mkdir -p debian/tmp/usr/share/lirc/
 	install --mode=644 debian/conf.placeholder \
@@ -76,6 +83,7 @@ install: build-stamp
 	cp -dpR drivers debian/tmp/usr/src/modules/lirc/
 	find debian/tmp/usr/src/modules/lirc -name "*.o" -o -name Makefile.in \
 		-o -name Makefile.am -o -name "*.ko"| xargs rm
+	
 	for file in `find debian/tmp/usr/src/modules/lirc -name Makefile`; \
 		do \
 		    awk '/^[^:]*Makefile[^:]*:/ \
@@ -87,6 +95,7 @@ install: build-stamp
 			 { beg = 0; }' $$file >$$file.tmp && \
 			mv $$file.tmp $$file; \
 		done
+	
 	sed -n \
 		-e'/define *DEV_LIRC\>/p' \
 		-e'/define *LIRC_MAJOR\>/p' \
@@ -97,6 +106,7 @@ install: build-stamp
 		debian/tmp/usr/src/modules/lirc/debian/
 	mkdir -p debian/liblircclient-dev/usr/share/aclocal
 	cp contrib/lirc.m4 debian/liblircclient-dev/usr/share/aclocal/
+	
 	# install logcheck files
 	install -d debian/tmp/etc/logcheck/ignore.d.paranoid
 	install -o root -g root -m 644 debian/logcheck.ignore \
@@ -108,6 +118,7 @@ install: build-stamp
 	install -o root -g root -m 644 debian/logcheck.ignore \
 			debian/tmp/etc/logcheck/ignore.d.workstation/lirc
 
+# Build architecture-independent files here.
 binary-indep: build install
 	dh_installdocs -i
 	dh_installchangelogs -i
@@ -123,6 +134,7 @@ binary-indep: build install
 	dh_md5sums -i
 	dh_builddeb -i
 
+# Build architecture-dependent files here.
 binary-arch: build install
 	dh_testdir
 	dh_testroot
