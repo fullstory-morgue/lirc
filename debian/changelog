@@ -1,3 +1,9 @@
+lirc (0.8.2-1+c0.sidux.7) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 01 Feb 2008 23:01:32 +0100
+
 lirc (0.8.2-1+c0.sidux.6) unstable; urgency=low
 
   * Non-maintainer upload.
