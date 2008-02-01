@@ -15,8 +15,11 @@ lirc (0.8.2-1+c0.sidux.5) UNRELEASED; urgency=low
   * remove versioned download location from debian/copyright, it's always
     outdated and the base path will point to the download location just as
     well.
+  * remove custom mknod usage and depend on udev | makedev (>= 2.3.1-85)
+    instead (Closes: #393575).
+  * Recommend module-assistant | kernel-package for lirc-source.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 29 Jan 2008 14:32:06 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 01 Feb 2008 17:58:49 +0100
 
 lirc (0.8.2-1) experimental; urgency=low
 

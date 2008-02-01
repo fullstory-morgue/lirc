@@ -3,22 +3,11 @@ set -e
 
 make_devices ()
 {
-	if [ ! -e /dev/lirc ]; then
-		mknod /dev/lirc c 61 0
-		chown root:root /dev/lirc
-		chmod 660 /dev/lirc
-	fi
-	if [ ! -e /dev/lircd ]; then
-		mknod /dev/lircd p
-		chown root:root /dev/lircd
-		chmod 666 /dev/lircd
-	fi
-	if [ ! -e /dev/lircm ]; then
-		mknod /dev/lircm p
-		chown root:root /dev/lircm
-		chmod 666 /dev/lircm
+	if [ -x /dev/MAKEDEV ]; then
+		(cd /dev && ./MAKEDEV lirc) || true
 	fi
 }
+
 DebconfLoad ()
 {
 	db_get lirc/driver

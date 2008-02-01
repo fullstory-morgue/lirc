@@ -25,7 +25,8 @@ Uploaders: Hector Garcia <hector@debian.org>,
 Package: lirc
 Architecture: any
 Depends: ${shlibs:Depends},
-         ${misc:Depends}
+         ${misc:Depends},
+         udev | makedev (>= 2.3.1-85)
 Pre-Depends: dialog
 Suggests: lirc-modules-source,
           lirc-x,
@@ -73,7 +74,7 @@ Depends: ${misc:Depends},
 Recommends: make,
             dpkg-dev (>= 1.13),
             gcc | c-compiler,
-            kernel-package
+            module-assistant | kernel-package
 Suggests: kernel-source
 Conflicts: lirc (<<0.6.3-1)
 Description: infra-red remote control support - kernel modules
