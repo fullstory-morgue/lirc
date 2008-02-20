@@ -1,8 +1,8 @@
-lirc (0.8.2-1+c0.sidux.7) UNRELEASED; urgency=low
+lirc (0.8.2-1+c0.sidux.7) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * appease lintian and write (C) as © in debian/copyright.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 01 Feb 2008 23:01:32 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 20 Feb 2008 23:36:37 +0100
 
 lirc (0.8.2-1+c0.sidux.6) unstable; urgency=low
 
